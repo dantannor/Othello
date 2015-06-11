@@ -1,0 +1,6 @@
+C:\Users\S551LB\Desktop\B15 Ex02 HaimNakash 304852122 DanielTannor 314389214 (4)\B15 Ex02 HaimNakash 304852122 DanielTannor 314389214\GUI\bin\Debug\GUI.exe.config
+C:\Users\S551LB\Desktop\B15 Ex02 HaimNakash 304852122 DanielTannor 314389214 (4)\B15 Ex02 HaimNakash 304852122 DanielTannor 314389214\GUI\obj\Debug\GUI.csprojResolveAssemblyReference.cache
+C:\Users\S551LB\Desktop\B15 Ex02 HaimNakash 304852122 DanielTannor 314389214 (4)\B15 Ex02 HaimNakash 304852122 DanielTannor 314389214\GUI\bin\Debug\GUI.exe
+C:\Users\S551LB\Desktop\B15 Ex02 HaimNakash 304852122 DanielTannor 314389214 (4)\B15 Ex02 HaimNakash 304852122 DanielTannor 314389214\GUI\bin\Debug\GUI.pdb
+C:\Users\S551LB\Desktop\B15 Ex02 HaimNakash 304852122 DanielTannor 314389214 (4)\B15 Ex02 HaimNakash 304852122 DanielTannor 314389214\GUI\obj\Debug\GUI.exe
+C:\Users\S551LB\Desktop\B15 Ex02 HaimNakash 304852122 DanielTannor 314389214 (4)\B15 Ex02 HaimNakash 304852122 DanielTannor 314389214\GUI\obj\Debug\GUI.pdb
