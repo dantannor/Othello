@@ -20,3 +20,13 @@ C:\Users\S551LB\Documents\Othello\B15 Ex02 HaimNakash 304852122 DanielTannor 314
 C:\Users\S551LB\Documents\Othello\B15 Ex02 HaimNakash 304852122 DanielTannor 314389214\B15_Ex02_1\obj\Debug\B15_Ex02_1.application
 C:\Users\S551LB\Documents\Othello\B15 Ex02 HaimNakash 304852122 DanielTannor 314389214\B15_Ex02_1\obj\Debug\B15_Ex02_1.exe
 C:\Users\S551LB\Documents\Othello\B15 Ex02 HaimNakash 304852122 DanielTannor 314389214\B15_Ex02_1\obj\Debug\B15_Ex02_1.pdb
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\Othello\B15 Ex02 HaimNakash 304852122 DanielTannor 314389214\B15_Ex02_1\bin\Debug\B15_Ex02_1.exe.config
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\Othello\B15 Ex02 HaimNakash 304852122 DanielTannor 314389214\B15_Ex02_1\obj\Debug\B15_Ex02_1.exe
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\Othello\B15 Ex02 HaimNakash 304852122 DanielTannor 314389214\B15_Ex02_1\obj\Debug\B15_Ex02_1.pdb
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\Othello\B15 Ex02 HaimNakash 304852122 DanielTannor 314389214\B15_Ex02_1\bin\Debug\B15_Ex02_1.exe.manifest
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\Othello\B15 Ex02 HaimNakash 304852122 DanielTannor 314389214\B15_Ex02_1\bin\Debug\B15_Ex02_1.application
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\Othello\B15 Ex02 HaimNakash 304852122 DanielTannor 314389214\B15_Ex02_1\bin\Debug\B15_Ex02_1.exe
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\Othello\B15 Ex02 HaimNakash 304852122 DanielTannor 314389214\B15_Ex02_1\bin\Debug\B15_Ex02_1.pdb
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\Othello\B15 Ex02 HaimNakash 304852122 DanielTannor 314389214\B15_Ex02_1\obj\Debug\B15_Ex02_1.csprojResolveAssemblyReference.cache
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\Othello\B15 Ex02 HaimNakash 304852122 DanielTannor 314389214\B15_Ex02_1\obj\Debug\B15_Ex02_1.exe.manifest
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\Othello\B15 Ex02 HaimNakash 304852122 DanielTannor 314389214\B15_Ex02_1\obj\Debug\B15_Ex02_1.application
