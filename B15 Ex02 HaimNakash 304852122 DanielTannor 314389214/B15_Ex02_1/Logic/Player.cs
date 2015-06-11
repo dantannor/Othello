@@ -23,7 +23,7 @@ namespace B15_Ex02_1.Logic
         /// <summary>
         /// The m player.
         /// </summary>
-        private readonly Controller.ePlayer mPlayer;
+        private Controller.ePlayer mPlayer;
 
         /*
          * Player points
@@ -65,6 +65,7 @@ namespace B15_Ex02_1.Logic
             {
                 return this.mPlayer;
             }
+            set { this.mPlayer = value; }
         }
 
         /*

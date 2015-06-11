@@ -15,7 +15,7 @@ namespace GUI
         Button m_ButtonAgainstComputer = new Button();
         Button m_ButtonAgainstFriend = new Button();
         private bool r_AgainstComputer = false;
-
+       
 
         public eBoardSize BoardSize
         {
@@ -62,6 +62,7 @@ namespace GUI
             this.Controls.AddRange(new Control[] { m_ButtonIncreaseBoardSize, m_ButtonAgainstComputer, m_ButtonAgainstFriend});
             m_ButtonIncreaseBoardSize.Click += new EventHandler(m_ButtonIncreaseBoardSize_Click);
             m_ButtonAgainstComputer.Click += new EventHandler(m_ButtonAgainstComputer_Click);
+            m_ButtonAgainstFriend.Click += new EventHandler(m_ButtonAgainstFriend_Click);
         }
 
         private void m_ButtonIncreaseBoardSize_Click(object sender, EventArgs e)
@@ -88,7 +89,7 @@ namespace GUI
 
             Close();
             this.DialogResult = DialogResult.OK;
-            AgainstComputer = true;
+            AgainstComputer = false;
         }
         
     }

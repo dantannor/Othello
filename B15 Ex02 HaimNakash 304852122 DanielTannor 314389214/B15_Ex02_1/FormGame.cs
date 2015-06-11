@@ -123,13 +123,13 @@ namespace B15_Ex02_1
             
         }
 
-        private static void initPlayers()
+        private static void initPlayers(Controller.ePlayer ePlayer)
         {
             string player1Name = "haim";
             s_Player1 = new Player(player1Name, Controller.ePlayer.Player);
 
             // Determine player2 type and act accordingly
-            s_PlayerOrPc = Controller.ePlayer.Player;
+            s_PlayerOrPc = ePlayer;
 
             switch (s_PlayerOrPc)
             {
@@ -312,10 +312,18 @@ namespace B15_Ex02_1
             {
                 return;
             }
+            if (form.AgainstComputer == true)
+            {
+                initPlayers(Controller.ePlayer.PC);
+            }
+            else
+            {
+                initPlayers(Controller.ePlayer.Player);
+            }
 
 
-            initPlayers();
-            this.r_BoardSize = eBoardSize.Eight;
+            
+            this.r_BoardSize = form.BoardSize;
             initBoard(this.r_BoardSize);
             s_Game = new Game(s_Player1, s_Player2, s_Board);
             
@@ -388,6 +396,11 @@ namespace B15_Ex02_1
                 colorTurn = "Black's"; 
             }
             this.Text = String.Format("Othello - {0} Turn", colorTurn);
+            if (s_Player2.Type == Controller.ePlayer.PC)
+            {
+                play();
+                updateBoard();
+            }
         }
 
         private void updateBoard()
