@@ -195,11 +195,9 @@ namespace B15_Ex02_1.Logic
 
         public void checkAndFillListValidMoves()
         {
-            if (m_Board.Size == 8)
-            {
-                for (int i = 49; i < 57; i++)
+            for (int i = 49; i < 49 + m_Board.Size; i++)
                 {
-                    for (int j = 65; j < 73; j++)
+                    for (int j = 65; j < 65 + m_Board.Size; j++)
                     {
                         if (checkedValidCell(m_Board, (char)i, (char)j) && checkedValidMove(m_Board, (char)i, (char)j))
                         {
@@ -218,32 +216,32 @@ namespace B15_Ex02_1.Logic
                 foundLegalMoveNeighbours.Clear();
                 numberOfCellsNeededToChangeArray.Clear();
                 changeTheSequence = false;
-            }
+            
                 // boardSize = 6
-            else
-            {
-                for (int i = 49; i < 55; i++)
-                {
-                    for (int j = 65; j < 71; j++)
-                    {
-                        if (checkedValidCell(m_Board, (char)i, (char)j) && checkedValidMove(m_Board, (char)i, (char)j))
-                        {
-                            computerLegalMovesRow.Add((char)i);
-                            computerLegalMovesCol.Add((char)j);
-
-                            numberOfCellsNeededToChangeArray.Clear();
-                            foundLegalMoveNeighbours.Clear();
-                            changeTheSequence = false;
-                            CellsNeededToChange.Clear();
-                        }
-                    }
-                }
-
-                CellsNeededToChange.Clear();
-                foundLegalMoveNeighbours.Clear();
-                numberOfCellsNeededToChangeArray.Clear();
-                changeTheSequence = false;
-            }
+//            else
+//            {
+//                for (int i = 49; i < 55; i++)
+//                {
+//                    for (int j = 65; j < 71; j++)
+//                    {
+//                        if (checkedValidCell(m_Board, (char)i, (char)j) && checkedValidMove(m_Board, (char)i, (char)j))
+//                        {
+//                            computerLegalMovesRow.Add((char)i);
+//                            computerLegalMovesCol.Add((char)j);
+//
+//                            numberOfCellsNeededToChangeArray.Clear();
+//                            foundLegalMoveNeighbours.Clear();
+//                            changeTheSequence = false;
+//                            CellsNeededToChange.Clear();
+//                        }
+//                    }
+//                }
+//
+//                CellsNeededToChange.Clear();
+//                foundLegalMoveNeighbours.Clear();
+//                numberOfCellsNeededToChangeArray.Clear();
+//                changeTheSequence = false;
+//            }
         }
 
         public List<string> validCells(eTurn io_curPlayer)

@@ -63,21 +63,12 @@ namespace B15_Ex02_1.Logic
         {
             int letterToNumber = io_letter - 65;
             int numTonumber = io_num - 49;
-            if (m_boardSize == 8)
-            {
-                if (numTonumber < 0 || numTonumber > 7 || letterToNumber < 0 || letterToNumber > 7)
-                {
-                    return 'E';
-                }
-            }
-            else
-            {
-                if (numTonumber < 0 || numTonumber > 5 || letterToNumber < 0 || letterToNumber > 5)
-                {
-                    return 'E';
-                }
-            }
 
+            if (numTonumber < 0 || numTonumber > m_boardSize - 1 || letterToNumber < 0 || letterToNumber > m_boardSize - 1)
+            {
+                return 'E';
+            }
+            
             return cells[numTonumber, letterToNumber];
         }
 
