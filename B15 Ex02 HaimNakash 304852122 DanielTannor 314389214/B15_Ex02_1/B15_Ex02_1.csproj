@@ -80,7 +80,7 @@
     <Compile Include="FormGame.Designer.cs">
       <DependentUpon>FormGame.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormLogin.cs">
+    <Compile Include="FormStart.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Logic\Board.cs" />

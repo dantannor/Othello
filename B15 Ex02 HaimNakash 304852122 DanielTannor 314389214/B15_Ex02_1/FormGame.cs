@@ -1,29 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using System.Xml;
-using B15_Ex02_1.Control;
-using B15_Ex02_1.Logic;
-using GUI;
-using View = B15_Ex02_1.UI.View;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="FormGame.cs" company="">
+//   
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace B15_Ex02_1
 {
+    using System;
+    using System.Drawing;
+    using System.Text;
+    using System.Windows.Forms;
+
+    using B15_Ex02_1.Control;
+    using B15_Ex02_1.Logic;
+
     public partial class FormGame : Form
     {
-        private int k_GameButtonSize = 30;
-        private eTurn turn = eTurn.Player1;
-       // private eBoardSize boardSize = eBoardSize.Eight;
-       // private Board m_Board;
-        private const int k_WidthAddition = 50;
-        private const int k_HeightAddition = 70;
-        public static StringBuilder sb = new StringBuilder();
+        private const int k_GameButtonSize = 30;
 
+        private const int k_Width = 50;
+
+        private const int k_Height = 70;
+
+        public static StringBuilder s_Sb = new StringBuilder();
 
         private static Board s_Board;
 
@@ -41,31 +40,74 @@ namespace B15_Ex02_1
 
         private readonly eBoardSize r_BoardSize;
 
+        private eTurn m_Turn = eTurn.Player1;
+
         private string m_Victor;
 
         private string m_OtherPlayer;
 
-        private static eBoardSize getBoardSize()
+        /// <summary>
+        /// Starts the game form
+        /// </summary>
+        public FormGame()
         {
+            FormStart formStart = new FormStart();
 
-            return (eBoardSize.Eight);
+            if (formStart.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            initPlayers(formStart.AgainstComputer ? Controller.ePlayer.PC : Controller.ePlayer.Player);
+
+            this.r_BoardSize = formStart.BoardSize;
+            initBoard(this.r_BoardSize);
+            s_Game = new Game(s_Player1, s_Player2, s_Board);
+
+            this.Text = "Othello - Black's Turn";
+            this.Size = new Size(
+                k_GameButtonSize * (int)r_BoardSize + k_Width,
+                k_GameButtonSize * (int)r_BoardSize + k_Height);
+            this.BackColor = Color.Gray;
+            this.FormBorderStyle = FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
+            s_Board = s_Board;
+
+            /*
+            if (againstComputer)
+            {
+              Controller controller = new Controller();
+            }
+            */
         }
 
-        private static string getPlayerMove(string io_PlayerName, eTurn io_PlayerTurn)
+        /// <summary>
+        /// Gets the player move
+        /// </summary>
+        /// <param name="i_PlayerName">Player's name</param>
+        /// <param name="i_PlayerTurn">Player's turn</param>
+        /// <returns>Player's move from the string builder</returns>
+        private static string getPlayerMove(string i_PlayerName, eTurn i_PlayerTurn)
         {
-
-            if (!Game.ValidMove(sb.ToString(), io_PlayerTurn))
+            if (!Game.ValidMove(s_Sb.ToString(), i_PlayerTurn))
             {
+                // Nothing happens if the player clicks an invalid box
                 return null;
             }
-            return sb.ToString();
+
+            return s_Sb.ToString();
         }
 
-        private static string getPcMove(eTurn io_PlayerTurn)
+        /// <summary>
+        /// Gets the PC move
+        /// </summary>
+        /// <param name="i_PlayerTurn"></param>
+        /// <returns></returns>
+        private static string getPcMove(eTurn i_PlayerTurn)
         {
             Random rnd = new Random();
             string pcMove;
-            if (io_PlayerTurn == eTurn.Player1)
+            if (i_PlayerTurn == eTurn.Player1)
             {
                 int rndCell = rnd.Next(0, s_Game.PcMovesList.Count);
                 pcMove = s_Game.PcMovesList[rndCell];
@@ -76,23 +118,26 @@ namespace B15_Ex02_1
                 pcMove = s_Game.PcMovesList[rndCell];
             }
 
-
             return pcMove;
         }
 
+        /// <summary>
+        /// Initializes the board according to the size
+        /// </summary>
+        /// <param name="io_BoardSize"></param>
         private static void initBoard(eBoardSize io_BoardSize)
         {
-                    s_Board = new Board((int)io_BoardSize);
+            s_Board = new Board((int)io_BoardSize);
 
-                    char firstBoardNum = (char)(((int)io_BoardSize / 2) + '0');
-                    char firstBoardLetter = (char)((((int)io_BoardSize / 2) - 1) + 'A');
-                    char secondBoardLetter = (char)(((int)io_BoardSize / 2) + 'A');
-                    char secondBoardNum = (char)((((int)io_BoardSize / 2) + 1) + '0');
+            char firstBoardNum = (char)(((int)io_BoardSize / 2) + '0');
+            char firstBoardLetter = (char)((((int)io_BoardSize / 2) - 1) + 'A');
+            char secondBoardLetter = (char)(((int)io_BoardSize / 2) + 'A');
+            char secondBoardNum = (char)((((int)io_BoardSize / 2) + 1) + '0');
 
-                    s_Board.setCell('O', firstBoardNum, firstBoardLetter);
-                    s_Board.setCell('X', firstBoardNum, secondBoardLetter);
-                    s_Board.setCell('X', secondBoardNum, firstBoardLetter);
-                    s_Board.setCell('O', secondBoardNum, secondBoardLetter);
+            s_Board.setCell('O', firstBoardNum, firstBoardLetter);
+            s_Board.setCell('X', firstBoardNum, secondBoardLetter);
+            s_Board.setCell('X', secondBoardNum, firstBoardLetter);
+            s_Board.setCell('O', secondBoardNum, secondBoardLetter);
         }
 
         private static void initPlayers(Controller.ePlayer ePlayer)
@@ -141,86 +186,81 @@ namespace B15_Ex02_1
             m_OtherPlayer = string.Empty;
             s_PlayerTurn = eTurn.Player1;
 
-          //  While game didn't end and player didn't press "Q"
-          //  while ((s_PlayerTurn != eTurn.GameOver) && (s_PlayerMove != "Q"))
-          //  {
-                // Get player turn
-                s_PlayerTurn = s_Game.GetTurn();
-                eTurn noMovesPlayer = Game.TurnTransfer();
-                if (noMovesPlayer != eTurn.NoTransfer)
-                {
-                    string noMovesPlayerName = playerNoMoves(noMovesPlayer);
-                    //View.DisplayTurnSwitch(noMovesPlayerName);
-                }
+            // While game didn't end and player didn't press "Q"
+            // while ((s_PlayerTurn != eTurn.GameOver) && (s_PlayerMove != "Q"))
+            // {
+            // Get player turn
+            s_PlayerTurn = s_Game.GetTurn();
+            eTurn noMovesPlayer = Game.TurnTransfer();
+            if (noMovesPlayer != eTurn.NoTransfer)
+            {
+                string noMovesPlayerName = playerNoMoves(noMovesPlayer);
 
-                // Get player move, validate and pass it on to game move, which updates the board.
-                switch (s_PlayerTurn)
-                {
-                    case eTurn.Player1:
+                // View.DisplayTurnSwitch(noMovesPlayerName);
+            }
 
-                        if ((s_PlayerMove = getPlayerMove(s_Player1.PlayerName, eTurn.Player1)) == null)
+            // Get player move, validate and pass it on to game move, which updates the board.
+            switch (s_PlayerTurn)
+            {
+                case eTurn.Player1:
+
+                    if ((s_PlayerMove = getPlayerMove(s_Player1.PlayerName, eTurn.Player1)) == null)
+                    {
+                        s_PlayerTurn = s_Game.GetTurn();
+                        return;
+                    }
+
+                    if (s_PlayerMove == "Q")
+                    {
+                        // continue;
+                    }
+
+                    // SetBoard with playermove
+
+                    // SetBoard with playermove
+                    s_Game.Move(s_PlayerTurn, s_PlayerMove);
+
+                    // View.DrawBoard(s_Board);
+                    break;
+                case eTurn.Player2:
+
+                    // Player2
+                    if (s_Player2.Type == Controller.ePlayer.Player2)
+                    {
+                        if ((s_PlayerMove = getPlayerMove(s_Player2.PlayerName, eTurn.Player2)) == null)
                         {
                             s_PlayerTurn = s_Game.GetTurn();
                             return;
                         }
-                        
-                        
+
                         if (s_PlayerMove == "Q")
                         {
-                            //continue;
+                            // continue;
                         }
-                        // SetBoard with playermove
-
 
                         // SetBoard with playermove
                         s_Game.Move(s_PlayerTurn, s_PlayerMove);
 
+                        // View.DrawBoard(s_Board);
+                    }
+                    else if (s_Player2.Type == Controller.ePlayer.PC)
+                    {
+                        // PC
+                        s_PlayerMove = getPcMove(eTurn.Player2);
 
-                        //View.DrawBoard(s_Board);
+                        // SetBoard with playermove
+                        s_Game.Move(s_PlayerTurn, s_PlayerMove);
 
-                        break;
-                    case eTurn.Player2:
+                        // View.DrawBoard(s_Board);
+                    }
 
-                        // Player2
-                        if (s_Player2.Type == Controller.ePlayer.Player2)
-                        {
+                    break;
+                case eTurn.GameOver:
+                    Environment.Exit(1);
 
-                            if ((s_PlayerMove = getPlayerMove(s_Player2.PlayerName, eTurn.Player2)) == null)
-                            {
-                                s_PlayerTurn = s_Game.GetTurn();
-                                return;
-                            }
+                    break;
 
-                            if (s_PlayerMove == "Q")
-                            {
-                               // continue;
-                            }
-
-                            // SetBoard with playermove
-                            s_Game.Move(s_PlayerTurn, s_PlayerMove);
-
-
-                            // View.DrawBoard(s_Board);
-                        }
-                        else if (s_Player2.Type == Controller.ePlayer.PC)
-
-                            // PC
-                        {
-                            s_PlayerMove = getPcMove(eTurn.Player2);
-
-
-                            // SetBoard with playermove
-                            s_Game.Move(s_PlayerTurn, s_PlayerMove);
-
-                            //View.DrawBoard(s_Board);
-                        }
-
-                        break;
-                    case eTurn.GameOver:
-                        System.Environment.Exit(1);
-
-                        break;
-               // }
+                // }
             }
         }
 
@@ -229,10 +269,10 @@ namespace B15_Ex02_1
             restartPlayers();
             initBoard(this.r_BoardSize);
             s_Game = new Game(s_Player1, s_Player2, s_Board);
-            //View.DrawBoard(s_Board);
+
+            // View.DrawBoard(s_Board);
             play();
         }
-
 
         private void endGame()
         {
@@ -247,9 +287,8 @@ namespace B15_Ex02_1
                 m_OtherPlayer = s_Player1.PlayerName;
             }
 
-           // View.PrintGameOver(s_Player1.PlayerPoints, s_Player2.PlayerPoints, m_Victor, m_OtherPlayer);
+            // View.PrintGameOver(s_Player1.PlayerPoints, s_Player2.PlayerPoints, m_Victor, m_OtherPlayer);
         }
-
 
         private string playerNoMoves(eTurn i_NoMovesPlayer)
         {
@@ -268,48 +307,6 @@ namespace B15_Ex02_1
             return noMovesPlayerName;
         }
 
-
-        public FormGame()
-        {
-
-            FormLogin form = new FormLogin();
-
-            if (form.ShowDialog() != DialogResult.OK)
-            {
-                return;
-            }
-            if (form.AgainstComputer == true)
-            {
-                initPlayers(Controller.ePlayer.PC);
-            }
-            else
-            {
-                initPlayers(Controller.ePlayer.Player);
-            }
-
-
-            
-            this.r_BoardSize = form.BoardSize;
-            initBoard(this.r_BoardSize);
-            s_Game = new Game(s_Player1, s_Player2, s_Board);
-            
-
-            this.Text = "Othello - Black's Turn";
-            this.Size = new Size(k_GameButtonSize * (int)r_BoardSize + k_WidthAddition,
-                k_GameButtonSize * (int)r_BoardSize + k_HeightAddition);
-            this.BackColor = Color.Gray;
-            this.FormBorderStyle = FormBorderStyle.Fixed3D;
-            this.MaximizeBox = false;
-            s_Board = s_Board;
-            
-            /*
-            if (againstComputer)
-            {
-              Controller controller = new Controller();
-            }
-            */
-        }
-
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
@@ -318,13 +315,12 @@ namespace B15_Ex02_1
 
         public void initializeControls()
         {
-            for (int i = 0; i < (int) r_BoardSize; i++)
+            for (int i = 0; i < (int)r_BoardSize; i++)
             {
                 for (int j = 0; j < (int)r_BoardSize; j++)
                 {
-
                     GameButton boardButton = new GameButton(i, j);
-                    boardButton.Location = new Point(j*k_GameButtonSize + 15, i*k_GameButtonSize + 15);
+                    boardButton.Location = new Point(j * k_GameButtonSize + 15, i * k_GameButtonSize + 15);
 
                     boardButton.Size = new Size(k_GameButtonSize, k_GameButtonSize);
                     char coin = s_Board.getCell(i, j);
@@ -332,58 +328,57 @@ namespace B15_Ex02_1
                     {
                         boardButton.Text = coin.ToString();
 
-                        this.Controls.AddRange(new System.Windows.Forms.Control[] {boardButton});
+                        this.Controls.AddRange(new System.Windows.Forms.Control[] { boardButton });
                         boardButton.Click += new EventHandler(this.boardButton_Click);
                         this.Controls.Add(boardButton);
                     }
                 }
             }
+
             updateBoard();
         }
 
         private void boardButton_Click(object sender, EventArgs e)
         {
-            
             GameButton button = sender as GameButton;
-            
-            
-            sb.Append((char) ('A' + button.Col));
-            sb.Append((char)('1' + button.Row));
+
+            s_Sb.Append((char)('A' + button.Col));
+            s_Sb.Append((char)('1' + button.Row));
             play();
             updateBoard();
-            sb.Length = 0;
-            string colorTurn = "";
+            s_Sb.Length = 0;
+            string colorTurn = string.Empty;
             if (s_PlayerTurn == eTurn.Player1)
             {
-                colorTurn = "White's"; 
+                colorTurn = "White's";
             }
             else
             {
-                colorTurn = "Black's"; 
+                colorTurn = "Black's";
             }
-            this.Text = String.Format("Othello - {0} Turn", colorTurn);
+
+            this.Text = string.Format("Othello - {0} Turn", colorTurn);
             if (s_Player2.Type == Controller.ePlayer.PC)
             {
                 play();
                 updateBoard();
             }
+
             if (s_Game.GetTurn() == eTurn.GameOver)
             {
-                System.Environment.Exit(1);
+                Environment.Exit(1);
             }
-            s_Game.GetTurn();
 
+            s_Game.GetTurn();
         }
 
         private void updateBoard()
         {
-
             foreach (System.Windows.Forms.Control control in this.Controls)
             {
                 GameButton button = control as GameButton;
                 if (button != null)
                 {
-
                     char soldier = s_Board.getCell(button.Row, button.Col);
                     if (soldier != null)
                     {
@@ -408,11 +403,10 @@ namespace B15_Ex02_1
             }
         }
 
-
-
         public class GameButton : Button
         {
             private int m_Row;
+
             private int m_Col;
 
             public GameButton(int i_Row, int i_Col)
@@ -423,15 +417,19 @@ namespace B15_Ex02_1
 
             public int Row
             {
-                get { return this.m_Row; }
+                get
+                {
+                    return this.m_Row;
+                }
             }
 
             public int Col
             {
-                get { return this.m_Col; }
+                get
+                {
+                    return this.m_Col;
+                }
             }
         }
-
-
     }
 }

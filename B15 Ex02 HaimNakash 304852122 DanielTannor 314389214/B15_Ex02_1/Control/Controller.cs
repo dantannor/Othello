@@ -8,7 +8,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Windows.Forms;
-using GUI;
 
 namespace B15_Ex02_1.Control
 {
@@ -207,7 +206,7 @@ namespace B15_Ex02_1.Control
         public Controller()
         {
 
-            FormLogin form = new FormLogin();
+            FormStart form = new FormStart();
 
             if (form.ShowDialog() != DialogResult.OK)
             {
