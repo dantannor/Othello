@@ -228,13 +228,7 @@ namespace B15_Ex02_1
 
                         break;
                     case eTurn.GameOver:
-                        this.endGame();
-                        Controller.eAnotherGame anotherGame = (Controller.eAnotherGame) int.Parse(View.AskPlayAgain());
-
-                        if (anotherGame == Controller.eAnotherGame.Y)
-                        {
-                            newGame();
-                        }
+                        System.Environment.Exit(1);
 
                         break;
                // }
@@ -360,7 +354,7 @@ namespace B15_Ex02_1
 
         private void boardButton_Click(object sender, EventArgs e)
         {
-
+            
             GameButton button = sender as GameButton;
             
             
@@ -384,6 +378,12 @@ namespace B15_Ex02_1
                 play();
                 updateBoard();
             }
+            if (s_Game.GetTurn() == eTurn.GameOver)
+            {
+                System.Environment.Exit(1);
+            }
+            s_Game.GetTurn();
+
         }
 
         private void updateBoard()

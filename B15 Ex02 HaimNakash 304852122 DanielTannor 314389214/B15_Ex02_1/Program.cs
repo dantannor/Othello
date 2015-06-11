@@ -19,6 +19,7 @@ namespace GUI
 
             form.ShowDialog();
              
+
             /*
             Controller controller = new Controller();
             Console.WriteLine("Press enter to exit");
