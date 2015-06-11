@@ -82,28 +82,45 @@ namespace B15_Ex02_1
 
         private static void initBoard(eBoardSize io_BoardSize)
         {
-            switch (io_BoardSize)
-            {
-                case eBoardSize.Six:
-                    s_Board = new Board(6);
+//            switch (io_BoardSize)
+//            {
+//                case eBoardSize.Six:
+//                    s_Board = new Board(6);
 
-                    s_Board.setCell('O', '3', 'C');
-                    s_Board.setCell('X', '3', 'D');
-                    s_Board.setCell('X', '4', 'C');
-                    s_Board.setCell('O', '4', 'D');
+//                    s_Board.setCell('O', '3', 'C');
+//                    s_Board.setCell('X', '3', 'D');
+//                    s_Board.setCell('X', '4', 'C');
+//                    s_Board.setCell('O', '4', 'D');
 
-                    break;
+                    s_Board = new Board((int)io_BoardSize);
 
-                case eBoardSize.Eight:
-                    s_Board = new Board(8);
+                    int firstBoardNum = (int)io_BoardSize / 2;
+                    int firstBoardLetter = firstBoardNum + 16;
+                    int secondBoardLetter = firstBoardNum + 17;
+                    int secondBoardNum = firstBoardNum + 1;
 
-                    s_Board.setCell('O', '4', 'D');
-                    s_Board.setCell('X', '4', 'E');
-                    s_Board.setCell('X', '5', 'D');
-                    s_Board.setCell('O', '5', 'E');
+                    char firstBoardNumChar = char.Parse(firstBoardNum.ToString());
+                    char firstBoardLetterChar = char.Parse(firstBoardLetter.ToString());
+                    char secondBoardNumChar = char.Parse(secondBoardNum.ToString());
+                    char secondBoardLetterChar = char.Parse(secondBoardLetter.ToString());
 
-                    break;
-            }
+                    s_Board.setCell('O', firstBoardNumChar, firstBoardLetterChar);
+                    s_Board.setCell('X', firstBoardNumChar, secondBoardLetterChar);
+                    s_Board.setCell('X', secondBoardNumChar, firstBoardLetterChar);
+                    s_Board.setCell('O', secondBoardNumChar, secondBoardLetterChar);
+//
+//                    break;
+//
+//                case eBoardSize.Eight:
+//                    s_Board = new Board(8);
+//
+//                    s_Board.setCell('O', '4', 'D');
+//                    s_Board.setCell('X', '4', 'E');
+//                    s_Board.setCell('X', '5', 'D');
+//                    s_Board.setCell('O', '5', 'E');
+//
+//                    break;
+            
         }
 
         private static void initPlayers()
