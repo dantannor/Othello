@@ -36,7 +36,7 @@ namespace B15_Ex02_1
 
         private static Game s_Game;
 
-        private static Controller.ePlayer s_PlayerOrPc;
+        private static ePlayer s_PlayerOrPc;
 
         private readonly eBoardSize r_BoardSize;
 
@@ -58,7 +58,7 @@ namespace B15_Ex02_1
                 return;
             }
 
-            initPlayers(formStart.AgainstComputer ? Controller.ePlayer.PC : Controller.ePlayer.Player);
+            initPlayers(formStart.AgainstComputer ? ePlayer.PC : ePlayer.Player);
 
             this.r_BoardSize = formStart.BoardSize;
             initBoard(this.r_BoardSize);
@@ -66,8 +66,8 @@ namespace B15_Ex02_1
 
             this.Text = "Othello - Black's Turn";
             this.Size = new Size(
-                k_GameButtonSize * (int)r_BoardSize + k_Width,
-                k_GameButtonSize * (int)r_BoardSize + k_Height);
+                (k_GameButtonSize * (int)r_BoardSize) + k_Width,
+                (k_GameButtonSize * (int)r_BoardSize) + k_Height);
             this.BackColor = Color.Gray;
             this.FormBorderStyle = FormBorderStyle.Fixed3D;
             this.MaximizeBox = false;
@@ -89,13 +89,7 @@ namespace B15_Ex02_1
         /// <returns>Player's move from the string builder</returns>
         private static string getPlayerMove(string i_PlayerName, eTurn i_PlayerTurn)
         {
-            if (!Game.ValidMove(s_Sb.ToString(), i_PlayerTurn))
-            {
-                // Nothing happens if the player clicks an invalid box
-                return null;
-            }
-
-            return s_Sb.ToString();
+            return !Game.ValidMove(s_Sb.ToString(), i_PlayerTurn) ? null : s_Sb.ToString();
         }
 
         /// <summary>
@@ -140,23 +134,23 @@ namespace B15_Ex02_1
             s_Board.setCell('O', secondBoardNum, secondBoardLetter);
         }
 
-        private static void initPlayers(Controller.ePlayer ePlayer)
+        private static void initPlayers(ePlayer ePlayer)
         {
             string player1Name = "haim";
-            s_Player1 = new Player(player1Name, Controller.ePlayer.Player);
+            s_Player1 = new Player(player1Name, ePlayer.Player);
 
             // Determine player2 type and act accordingly
             s_PlayerOrPc = ePlayer;
 
             switch (s_PlayerOrPc)
             {
-                case Controller.ePlayer.Player:
+                case ePlayer.Player:
                     string player2Name = "nakash";
-                    s_Player2 = new Player(player2Name, Controller.ePlayer.Player2);
+                    s_Player2 = new Player(player2Name, ePlayer.Player2);
                     break;
 
-                case Controller.ePlayer.PC:
-                    s_Player2 = new Player("*PC*", Controller.ePlayer.PC);
+                case ePlayer.PC:
+                    s_Player2 = new Player("*PC*", ePlayer.PC);
                     break;
             }
         }
@@ -166,16 +160,16 @@ namespace B15_Ex02_1
          */
         private static void restartPlayers()
         {
-            s_Player1 = new Player(s_Player1.PlayerName, Controller.ePlayer.Player);
+            s_Player1 = new Player(s_Player1.PlayerName, ePlayer.Player);
 
             switch (s_PlayerOrPc)
             {
-                case Controller.ePlayer.Player:
-                    s_Player2 = new Player(s_Player2.PlayerName, Controller.ePlayer.Player2);
+                case ePlayer.Player:
+                    s_Player2 = new Player(s_Player2.PlayerName, ePlayer.Player2);
                     break;
 
-                case Controller.ePlayer.PC:
-                    s_Player2 = new Player("*PC*", Controller.ePlayer.PC);
+                case ePlayer.PC:
+                    s_Player2 = new Player("*PC*", ePlayer.PC);
                     break;
             }
         }
@@ -225,7 +219,7 @@ namespace B15_Ex02_1
                 case eTurn.Player2:
 
                     // Player2
-                    if (s_Player2.Type == Controller.ePlayer.Player2)
+                    if (s_Player2.Type == ePlayer.Player2)
                     {
                         if ((s_PlayerMove = getPlayerMove(s_Player2.PlayerName, eTurn.Player2)) == null)
                         {
@@ -243,7 +237,7 @@ namespace B15_Ex02_1
 
                         // View.DrawBoard(s_Board);
                     }
-                    else if (s_Player2.Type == Controller.ePlayer.PC)
+                    else if (s_Player2.Type == ePlayer.PC)
                     {
                         // PC
                         s_PlayerMove = getPcMove(eTurn.Player2);
@@ -358,7 +352,7 @@ namespace B15_Ex02_1
             }
 
             this.Text = string.Format("Othello - {0} Turn", colorTurn);
-            if (s_Player2.Type == Controller.ePlayer.PC)
+            if (s_Player2.Type == ePlayer.PC)
             {
                 play();
                 updateBoard();

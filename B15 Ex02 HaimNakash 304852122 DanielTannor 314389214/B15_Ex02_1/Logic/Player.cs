@@ -23,7 +23,7 @@ namespace B15_Ex02_1.Logic
         /// <summary>
         /// The m player.
         /// </summary>
-        private Controller.ePlayer mPlayer;
+        private ePlayer m_Player;
 
         /*
          * Player points
@@ -33,11 +33,11 @@ namespace B15_Ex02_1.Logic
         /*
          * Initializes the player: name, points, type
          */
-        public Player(string io_PlayerName, Controller.ePlayer io_Player)
+        public Player(string io_PlayerName, ePlayer io_Player)
         {
             this.m_PlayerName = io_PlayerName;
             this.m_PlayerPoints = 2;
-            this.mPlayer = io_Player;
+            this.m_Player = io_Player;
         }
 
         /*
@@ -59,13 +59,14 @@ namespace B15_Ex02_1.Logic
         /*
          * Get player type
          */
-        public Controller.ePlayer Type
+        public ePlayer Type
         {
             get
             {
-                return this.mPlayer;
+                return this.m_Player;
             }
-            set { this.mPlayer = value; }
+
+            set { this.m_Player = value; }
         }
 
         /*

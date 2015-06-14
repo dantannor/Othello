@@ -31,6 +31,18 @@ namespace B15_Ex02_1.Control
         Twelve = 12
     }
 
+    /*
+         * 2nd Player type PC/Player 2
+         */
+    public enum ePlayer
+    {
+        Player = 1,
+
+        PC = 2,
+
+        Player2 = 3
+    }
+
     public class Controller
     {
         private static FormGame gameForm;
@@ -54,18 +66,6 @@ namespace B15_Ex02_1.Control
         private string m_Victor;
 
         private string m_OtherPlayer;
-
-        /*
-         * 2nd Player type PC/Player 2
-         */
-        public enum ePlayer
-        {
-            Player = 1,
-
-            PC = 2,
-
-            Player2 = 3
-        }
 
         /*
          * Gets board size

@@ -30,7 +30,7 @@ namespace B15_Ex02_1.Logic
     {
         private static eTurn s_NextPlayerTurn;
 
-        public static List<string> m_Player1MovesList;
+        private static List<string> m_Player1MovesList;
 
         private static List<string> m_Player2MovesList;
 
@@ -68,6 +68,32 @@ namespace B15_Ex02_1.Logic
             }
 
             return true;
+        }
+
+        public static List<string> Player1Moves
+        {
+            get
+            {
+                return m_Player1MovesList;
+            }
+
+            set
+            {
+                m_Player1MovesList = value;
+            }
+        }
+
+        public static List<string> Player2Moves
+        {
+            get
+            {
+                return m_Player2MovesList;
+            }
+
+            set
+            {
+                m_Player2MovesList = value;
+            }
         }
 
         /*
