@@ -34,8 +34,6 @@ namespace B15_Ex02_1
 
         private static string s_PlayerMove;
 
-        private static eTurn s_PlayerTurn;
-
         private static Game s_Game;
 
         private static ePlayer s_PlayerOrPc;
@@ -184,13 +182,13 @@ namespace B15_Ex02_1
         {
             m_Victor = string.Empty;
             m_OtherPlayer = string.Empty;
-            s_PlayerTurn = eTurn.Player1;
+            m_Turn = eTurn.Player1;
 
             // While game didn't end and player didn't press "Q"
-            // while ((s_PlayerTurn != eTurn.GameOver) && (s_PlayerMove != "Q"))
+            // while ((m_Turn != eTurn.GameOver) && (s_PlayerMove != "Q"))
             // {
             // Get player turn
-            s_PlayerTurn = s_Game.GetTurn();
+            m_Turn = s_Game.GetTurn();
             eTurn noMovesPlayer = Game.TurnTransfer();
             if (noMovesPlayer != eTurn.NoTransfer)
             {
@@ -200,14 +198,14 @@ namespace B15_Ex02_1
             }
 
             // Get player move, validate and pass it on to game move, which updates the board.
-            switch (s_PlayerTurn)
+            switch (m_Turn)
             {
 
                 case eTurn.Player1:
 
                     if ((s_PlayerMove = getPlayerMove(s_Player1.PlayerName, eTurn.Player1)) == null)
                     {
-                        s_PlayerTurn = s_Game.GetTurn();
+                        m_Turn = s_Game.GetTurn();
                         return;
                     }
 
@@ -219,7 +217,7 @@ namespace B15_Ex02_1
                     // SetBoard with playermove
 
                     // SetBoard with playermove
-                    s_Game.Move(s_PlayerTurn, s_PlayerMove);
+                    s_Game.Move(m_Turn, s_PlayerMove);
                     
 
                     // View.DrawBoard(s_Board);
@@ -231,7 +229,7 @@ namespace B15_Ex02_1
                     {
                         if ((s_PlayerMove = getPlayerMove(s_Player2.PlayerName, eTurn.Player2)) == null)
                         {
-                            s_PlayerTurn = s_Game.GetTurn();
+                            m_Turn = s_Game.GetTurn();
                             return;
                         }
 
@@ -241,7 +239,7 @@ namespace B15_Ex02_1
                         }
 
                         // SetBoard with playermove
-                        s_Game.Move(s_PlayerTurn, s_PlayerMove);
+                        s_Game.Move(m_Turn, s_PlayerMove);
                         
 
                         // View.DrawBoard(s_Board);
@@ -252,7 +250,7 @@ namespace B15_Ex02_1
                         s_PlayerMove = getPcMove(eTurn.Player2);
 
                         // SetBoard with playermove
-                        s_Game.Move(s_PlayerTurn, s_PlayerMove);
+                        s_Game.Move(m_Turn, s_PlayerMove);
                         
 
                         // View.DrawBoard(s_Board);
@@ -384,6 +382,7 @@ namespace B15_Ex02_1
 
         public void initializeControls()
         {
+
             for (int i = 0; i < (int)r_BoardSize; i++)
             {
                 for (int j = 0; j < (int)r_BoardSize; j++)
@@ -404,6 +403,8 @@ namespace B15_Ex02_1
                 }
             }
 
+            this.play();
+            m_Turn = eTurn.Player1;
             updateBoard();
         }
 
@@ -418,7 +419,7 @@ namespace B15_Ex02_1
             s_Sb.Length = 0;
             string colorTurn = string.Empty;
 
-            if (s_PlayerTurn == eTurn.Player1)
+            if (m_Turn == eTurn.Player1)
             {
                 colorTurn = "White's";
             }
@@ -466,29 +467,33 @@ namespace B15_Ex02_1
                             button.Text = "O";
                             break;
                         default:
-                            if (s_PlayerTurn == eTurn.Player1)
-                            {
-                                if (Game.Player1Moves != null && Game.Player1Moves.Contains(button.ToString()))
-                                {
-                                    button.BackColor = Color.GreenYellow;
-                                }
-                                else
-                                {
-                                    button.BackColor = Color.Gray;
-                                }
-                            }
-                            else if (Game.Player2Moves != null && Game.Player2Moves.Contains(button.ToString()))
-                            {
-                                button.BackColor = Color.GreenYellow;
-                            }
-                            else
-                            {
-                                button.BackColor = Color.Gray;
-                            }
-
+                            updateGreens(button);
                             break;
-                    } 
+                    }
                 }
+            }
+        }
+
+        private void updateGreens(GameButton i_Button)
+        {
+            if (m_Turn == eTurn.Player1)
+            {
+                if (Game.Player1Moves != null && Game.Player1Moves.Contains(i_Button.ToString()))
+                {
+                    i_Button.BackColor = Color.GreenYellow;
+                }
+                else
+                {
+                    i_Button.BackColor = Color.Gray;
+                }
+            }
+            else if (Game.Player2Moves != null && Game.Player2Moves.Contains(i_Button.ToString()))
+            {
+                i_Button.BackColor = Color.GreenYellow;
+            }
+            else
+            {
+                i_Button.BackColor = Color.Gray;
             }
         }
 
