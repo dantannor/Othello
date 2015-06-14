@@ -29,6 +29,7 @@ namespace B15_Ex02_1.Logic
          * Player points
          */
         private int m_PlayerPoints;
+        private int m_PlayerGamePoints;
 
         /*
          * Initializes the player: name, points, type
@@ -55,6 +56,20 @@ namespace B15_Ex02_1.Logic
                 this.m_PlayerPoints = value;
             }
         }
+
+        public int PlayerGamePoints
+        {
+            get
+            {
+                return this.m_PlayerGamePoints;
+            }
+
+            set
+            {
+                this.m_PlayerGamePoints = value;
+            }
+        }
+
 
         /*
          * Get player type

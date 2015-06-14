@@ -138,7 +138,7 @@ namespace B15_Ex02_1
 
         private static void initPlayers(ePlayer ePlayer)
         {
-            string player1Name = "haim";
+            string player1Name = "Black";
             s_Player1 = new Player(player1Name, ePlayer.Player);
 
             // Determine player2 type and act accordingly
@@ -147,7 +147,7 @@ namespace B15_Ex02_1
             switch (s_PlayerOrPc)
             {
                 case ePlayer.Player:
-                    string player2Name = "nakash";
+                    string player2Name = "White";
                     s_Player2 = new Player(player2Name, ePlayer.Player2);
                     break;
 
@@ -162,8 +162,11 @@ namespace B15_Ex02_1
          */
         private static void restartPlayers()
         {
-            s_Player1 = new Player(s_Player1.PlayerName, ePlayer.Player);
 
+            s_Player1.PlayerPoints = 2;
+            s_Player2.PlayerPoints = 2;
+
+            /*
             switch (s_PlayerOrPc)
             {
                 case ePlayer.Player:
@@ -174,6 +177,7 @@ namespace B15_Ex02_1
                     s_Player2 = new Player("*PC*", ePlayer.PC);
                     break;
             }
+             */
         }
 
         private void play()
@@ -256,7 +260,8 @@ namespace B15_Ex02_1
 
                     break;
                 case eTurn.GameOver:
-                    Environment.Exit(1);
+                    endGame();
+                    askForAnotherGame();
 
                     break;
 
@@ -264,12 +269,70 @@ namespace B15_Ex02_1
             }
         }
 
+        private void askForAnotherGame()
+        {
+            if (m_Victor == s_Player1.PlayerName)
+            {
+                if (
+                    MessageBox.Show(
+                        string.Format("{0} Won!! ({1}/{2}) ({3}/{4}){5}Would you like another round?", m_Victor,
+                            s_Player1.PlayerPoints, s_Player2.PlayerPoints, s_Player1.PlayerGamePoints,
+                            s_Player2.PlayerGamePoints, Environment.NewLine), "Othello", MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Information) == DialogResult.Yes)
+                {
+                    newGame();
+                }
+                else
+                {
+                    System.Environment.Exit(1);
+                }
+            }
+            else if (m_Victor == s_Player2.PlayerName)
+            {
+                if (
+                    MessageBox.Show(
+                        string.Format("{0} Won!! ({1}/{2}) ({3}/{4}){5}Would you like another round?", m_Victor,
+                            s_Player2.PlayerPoints, s_Player1.PlayerPoints, s_Player2.PlayerGamePoints,
+                            s_Player1.PlayerGamePoints, Environment.NewLine), "Othello", MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Information) == DialogResult.Yes)
+                {
+                    newGame();
+                }
+                else
+                {
+                    System.Environment.Exit(1);
+                }
+            }
+            else
+            {
+                if (
+                    MessageBox.Show(
+                        string.Format("Tie!! ({0}/{1}) ({2}/{3}){4} Would you like another round?",
+                            s_Player1.PlayerPoints, s_Player2.PlayerPoints, s_Player1.PlayerGamePoints,
+                            s_Player2.PlayerGamePoints, Environment.NewLine), "Othello", MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Information) == DialogResult.Yes)
+                {
+                    newGame();
+                }
+                else
+                {
+                    System.Environment.Exit(1);
+                }
+            }
+           
+        }
+
         private void newGame()
         {
+            foreach (System.Windows.Forms.Control control in this.Controls)
+            {
+                control.Text = "";
+                control.BackColor = Color.Gray;
+            }
             restartPlayers();
             initBoard(this.r_BoardSize);
             s_Game = new Game(s_Player1, s_Player2, s_Board);
-
+            updateBoard();
             // View.DrawBoard(s_Board);
             play();
         }
@@ -280,11 +343,17 @@ namespace B15_Ex02_1
             {
                 m_Victor = s_Player1.PlayerName;
                 m_OtherPlayer = s_Player2.PlayerName;
+                s_Player1.PlayerGamePoints++;
             }
             else if (s_Player2.PlayerPoints > s_Player1.PlayerPoints)
             {
                 m_Victor = s_Player2.PlayerName;
                 m_OtherPlayer = s_Player1.PlayerName;
+                s_Player2.PlayerGamePoints++;
+            }
+            else
+            {
+                m_Victor = "Tie";
             }
 
             // View.PrintGameOver(s_Player1.PlayerPoints, s_Player2.PlayerPoints, m_Victor, m_OtherPlayer);
@@ -367,7 +436,9 @@ namespace B15_Ex02_1
 
             if (s_Game.GetTurn() == eTurn.GameOver)
             {
-                Environment.Exit(1);
+                endGame();
+                askForAnotherGame();
+              
             }
 
             s_Game.GetTurn();
