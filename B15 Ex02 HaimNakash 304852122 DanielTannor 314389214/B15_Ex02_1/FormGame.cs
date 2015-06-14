@@ -16,6 +16,8 @@ namespace B15_Ex02_1
 
     public partial class FormGame : Form
     {
+        private GameButton m_Button; 
+
         private const int k_GameButtonSize = 30;
 
         private const int k_Width = 50;
@@ -196,6 +198,7 @@ namespace B15_Ex02_1
             // Get player move, validate and pass it on to game move, which updates the board.
             switch (s_PlayerTurn)
             {
+
                 case eTurn.Player1:
 
                     if ((s_PlayerMove = getPlayerMove(s_Player1.PlayerName, eTurn.Player1)) == null)
@@ -213,6 +216,7 @@ namespace B15_Ex02_1
 
                     // SetBoard with playermove
                     s_Game.Move(s_PlayerTurn, s_PlayerMove);
+                    
 
                     // View.DrawBoard(s_Board);
                     break;
@@ -234,6 +238,7 @@ namespace B15_Ex02_1
 
                         // SetBoard with playermove
                         s_Game.Move(s_PlayerTurn, s_PlayerMove);
+                        
 
                         // View.DrawBoard(s_Board);
                     }
@@ -244,6 +249,7 @@ namespace B15_Ex02_1
 
                         // SetBoard with playermove
                         s_Game.Move(s_PlayerTurn, s_PlayerMove);
+                        
 
                         // View.DrawBoard(s_Board);
                     }
@@ -334,14 +340,15 @@ namespace B15_Ex02_1
 
         private void boardButton_Click(object sender, EventArgs e)
         {
-            GameButton button = sender as GameButton;
+            m_Button = sender as GameButton;
 
-            s_Sb.Append((char)('A' + button.Col));
-            s_Sb.Append((char)('1' + button.Row));
+            s_Sb.Append((char)('A' + m_Button.Col));
+            s_Sb.Append((char)('1' + m_Button.Row));
             play();
             updateBoard();
             s_Sb.Length = 0;
             string colorTurn = string.Empty;
+
             if (s_PlayerTurn == eTurn.Player1)
             {
                 colorTurn = "White's";
@@ -373,26 +380,43 @@ namespace B15_Ex02_1
                 GameButton button = control as GameButton;
                 if (button != null)
                 {
-                    char soldier = s_Board.getCell(button.Row, button.Col);
-                    if (soldier != null)
-                    {
-                        button.Text = soldier.ToString();
-                    }
-                    else
-                    {
-                        button.Text = string.Empty;
-                    }
+                    char coin = s_Board.getCell(button.Row, button.Col);
 
-                    if (button.Text == "X")
+                    switch (coin.ToString())
                     {
-                        button.ForeColor = Color.Black;
-                        button.BackColor = Color.White;
-                    }
-                    else if (button.Text == "O")
-                    {
-                        button.ForeColor = Color.White;
-                        button.BackColor = Color.Black;
-                    }
+                        case "X":
+                            button.ForeColor = Color.Black;
+                            button.BackColor = Color.White;
+                            button.Text = "O";
+                            break;
+                        case "O":
+                            button.ForeColor = Color.White;
+                            button.BackColor = Color.Black;
+                            button.Text = "O";
+                            break;
+                        default:
+                            if (s_PlayerTurn == eTurn.Player1)
+                            {
+                                if (Game.Player1Moves != null && Game.Player1Moves.Contains(button.ToString()))
+                                {
+                                    button.BackColor = Color.GreenYellow;
+                                }
+                                else
+                                {
+                                    button.BackColor = Color.Gray;
+                                }
+                            }
+                            else if (Game.Player2Moves != null && Game.Player2Moves.Contains(button.ToString()))
+                            {
+                                button.BackColor = Color.GreenYellow;
+                            }
+                            else
+                            {
+                                button.BackColor = Color.Gray;
+                            }
+
+                            break;
+                    } 
                 }
             }
         }
@@ -423,6 +447,11 @@ namespace B15_Ex02_1
                 {
                     return this.m_Col;
                 }
+            }
+
+            public override string ToString()
+            {
+                return string.Format("{0}{1}", (char)('A' + this.m_Col), (char)('1' + this.m_Row));
             }
         }
     }
