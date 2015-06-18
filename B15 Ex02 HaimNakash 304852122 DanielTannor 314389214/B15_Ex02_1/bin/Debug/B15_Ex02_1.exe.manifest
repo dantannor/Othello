@@ -52,14 +52,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="B15_Ex02_1.exe" size="27560">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="B15_Ex02_1.exe" size="28072">
       <assemblyIdentity name="B15_Ex02_1" version="0.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>x7YsVNjYT030wZuVZn+hEEOw9Hc=</dsig:DigestValue>
+        <dsig:DigestValue>TxgmR9DRzyvPTSLyTuhMx7pfVaI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

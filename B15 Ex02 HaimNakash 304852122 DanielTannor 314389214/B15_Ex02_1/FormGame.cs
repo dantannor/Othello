@@ -164,18 +164,7 @@ namespace B15_Ex02_1
             s_Player1.PlayerPoints = 2;
             s_Player2.PlayerPoints = 2;
 
-            /*
-            switch (s_PlayerOrPc)
-            {
-                case ePlayer.Player:
-                    s_Player2 = new Player(s_Player2.PlayerName, ePlayer.Player2);
-                    break;
 
-                case ePlayer.PC:
-                    s_Player2 = new Player("*PC*", ePlayer.PC);
-                    break;
-            }
-             */
         }
 
         private void play()
@@ -258,6 +247,7 @@ namespace B15_Ex02_1
 
                     break;
                 case eTurn.GameOver:
+                    updateBoard();
                     endGame();
                     askForAnotherGame();
 
@@ -331,7 +321,8 @@ namespace B15_Ex02_1
             initBoard(this.r_BoardSize);
             s_Game = new Game(s_Player1, s_Player2, s_Board);
             updateBoard();
-            // View.DrawBoard(s_Board);
+            
+            m_Turn = eTurn.Player1;
             play();
         }
 
@@ -402,10 +393,9 @@ namespace B15_Ex02_1
                     }
                 }
             }
-
-            this.play();
-            m_Turn = eTurn.Player1;
+            m_Turn = eTurn.Player2;
             updateBoard();
+
         }
 
         private void boardButton_Click(object sender, EventArgs e)
@@ -415,11 +405,11 @@ namespace B15_Ex02_1
             s_Sb.Append((char)('A' + m_Button.Col));
             s_Sb.Append((char)('1' + m_Button.Row));
             play();
-            updateBoard();
+            //updateBoard();
             s_Sb.Length = 0;
             string colorTurn = string.Empty;
 
-            if (m_Turn == eTurn.Player1)
+            if (m_Turn == eTurn.Player1 && Game.Player1Moves.Count != 0)
             {
                 colorTurn = "White's";
             }
@@ -432,16 +422,17 @@ namespace B15_Ex02_1
             if (s_Player2.Type == ePlayer.PC)
             {
                 play();
-                updateBoard();
+               
             }
 
             if (s_Game.GetTurn() == eTurn.GameOver)
             {
+                updateBoard();
                 endGame();
                 askForAnotherGame();
               
             }
-
+            updateBoard();
             s_Game.GetTurn();
         }
 
@@ -467,34 +458,58 @@ namespace B15_Ex02_1
                             button.Text = "O";
                             break;
                         default:
-                            updateGreens(button);
+                            updateGreens();
                             break;
                     }
                 }
             }
         }
 
-        private void updateGreens(GameButton i_Button)
+        private void updateGreens()
         {
-            if (m_Turn == eTurn.Player1)
+            s_Game.GetTurn();
+            
+            foreach (System.Windows.Forms.Control control in this.Controls)
             {
-                if (Game.Player1Moves != null && Game.Player1Moves.Contains(i_Button.ToString()))
+                GameButton button = control as GameButton;
+                char coin = s_Board.getCell(button.Row, button.Col);
+                if (coin != 'X' && coin != 'O')
                 {
-                    i_Button.BackColor = Color.GreenYellow;
+                    if (button != null)
+                    {
+                        if (m_Turn == eTurn.Player1)
+                        {
+                            if (Game.Player2Moves != null && Game.Player2Moves.Contains(button.ToString()))
+                            {
+                                button.BackColor = Color.GreenYellow;
+                            }
+                            else
+                            {
+                                if (Game.Player1Moves != null && Game.Player1Moves.Contains(button.ToString()))
+                                {
+                                    button.BackColor = Color.GreenYellow;
+                                }
+                                button.BackColor = Color.Gray;
+                            }
+                        }
+                        else if (Game.Player1Moves != null && Game.Player1Moves.Contains(button.ToString()))
+                        {
+                            button.BackColor = Color.GreenYellow;
+                        }
+                        else
+                        {
+                            if (Game.Player2Moves != null && Game.Player2Moves.Contains(button.ToString()))
+                            {
+                                button.BackColor = Color.GreenYellow;
+                            }
+                            button.BackColor = Color.Gray;
+                        }
+                    }  
                 }
-                else
-                {
-                    i_Button.BackColor = Color.Gray;
-                }
+
+
             }
-            else if (Game.Player2Moves != null && Game.Player2Moves.Contains(i_Button.ToString()))
-            {
-                i_Button.BackColor = Color.GreenYellow;
-            }
-            else
-            {
-                i_Button.BackColor = Color.Gray;
-            }
+            s_Game.GetTurn();
         }
 
         public class GameButton : Button
